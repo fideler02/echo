@@ -283,13 +283,94 @@ function SimulationPage() {
 
         {/* Main Content Area */}
         <div className="simulation-content">
+          {/* Patient Information Card */}
+          {patientState && (
+            <div className="patient-card modern-card">
+              <div className="patient-card-header">
+                <div className="patient-avatar">
+                  <span className="avatar-icon">👤</span>
+                </div>
+                <div className="patient-basic-info">
+                  <h3 className="patient-name">{patientState.name}</h3>
+                  <p className="patient-demographics">
+                    {patientState.age} years old • {patientState.genderIdentity} • {patientState.nativeLanguage} speaker
+                  </p>
+                  <div className="language-proficiency">
+                    <span className={`proficiency-badge ${patientState.englishProficiency.toLowerCase().replace(' ', '-')}`}>
+                      {patientState.englishProficiency} English
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="patient-card-content">
+                <div className="complaint-section">
+                  <h4>🩺 Presenting Complaint</h4>
+                  <p className="main-complaint">{patientState.mainComplaint}</p>
+                  {patientState.secondaryComplaint && (
+                    <p className="secondary-complaint">Also: {patientState.secondaryComplaint}</p>
+                  )}
+                </div>
+
+                <div className="cultural-context">
+                  <h4>🌍 Cultural Context</h4>
+                  <p>{patientState.culturalBackground}</p>
+                  <div className="persona-tag">
+                    <span>Persona: {patientState.patientPersona}</span>
+                  </div>
+                </div>
+
+                <div className="patient-perspectives">
+                  <h4>💭 Patient's Perspective</h4>
+                  <div className="perspective-grid">
+                    <div className="perspective-item">
+                      <span className="perspective-label">Ideas:</span>
+                      <p>{patientState.illnessPerception_Ideas}</p>
+                    </div>
+                    <div className="perspective-item">
+                      <span className="perspective-label">Concerns:</span>
+                      <p>{patientState.illnessPerception_Concerns}</p>
+                    </div>
+                    <div className="perspective-item">
+                      <span className="perspective-label">Expectations:</span>
+                      <p>{patientState.illnessPerception_Expectations}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="clinical-summary">
+                  <h4>⚕️ Clinical Summary</h4>
+                  <div className="clinical-grid">
+                    <div className="clinical-item">
+                      <span className="clinical-label">Diagnosis:</span>
+                      <p>{patientState.correctDiagnosis}</p>
+                    </div>
+                    <div className="clinical-item">
+                      <span className="clinical-label">Key History:</span>
+                      <p>{patientState.relevantPastMedicalHistory}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card-actions">
+                  <button
+                    className="btn-outline"
+                    onClick={() => setShowFullPatientInfo(true)}
+                  >
+                    📋 View Complete Information
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Chat Interface */}
           <div className="chat-section">
             <div className="chat-window modern-chat" ref={chatWindowRef}>
               {messages.map((msg, index) => (
                 <div key={index} className={`message modern-message ${
-                  msg.from === "patient" ? "patient-message" : 
-                  msg.from === "coach" ? "coach-message" : 
+                  msg.from === "patient" ? "patient-message" :
+                  msg.from === "coach" ? "coach-message" :
                   "provider-message"
                 }`}>
                   <div className="message-header">
@@ -480,86 +561,6 @@ function SimulationPage() {
             )}
           </div>
 
-          {/* Patient Information Card */}
-          {patientState && (
-            <div className="patient-card modern-card">
-              <div className="patient-card-header">
-                <div className="patient-avatar">
-                  <span className="avatar-icon">👤</span>
-                </div>
-                <div className="patient-basic-info">
-                  <h3 className="patient-name">{patientState.name}</h3>
-                  <p className="patient-demographics">
-                    {patientState.age} years old • {patientState.genderIdentity} • {patientState.nativeLanguage} speaker
-                  </p>
-                  <div className="language-proficiency">
-                    <span className={`proficiency-badge ${patientState.englishProficiency.toLowerCase().replace(' ', '-')}`}>
-                      {patientState.englishProficiency} English
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="patient-card-content">
-                <div className="complaint-section">
-                  <h4>🩺 Presenting Complaint</h4>
-                  <p className="main-complaint">{patientState.mainComplaint}</p>
-                  {patientState.secondaryComplaint && (
-                    <p className="secondary-complaint">Also: {patientState.secondaryComplaint}</p>
-                  )}
-                </div>
-
-                <div className="cultural-context">
-                  <h4>🌍 Cultural Context</h4>
-                  <p>{patientState.culturalBackground}</p>
-                  <div className="persona-tag">
-                    <span>Persona: {patientState.patientPersona}</span>
-                  </div>
-                </div>
-
-                <div className="patient-perspectives">
-                  <h4>💭 Patient's Perspective</h4>
-                  <div className="perspective-grid">
-                    <div className="perspective-item">
-                      <span className="perspective-label">Ideas:</span>
-                      <p>{patientState.illnessPerception_Ideas}</p>
-                    </div>
-                    <div className="perspective-item">
-                      <span className="perspective-label">Concerns:</span>
-                      <p>{patientState.illnessPerception_Concerns}</p>
-                    </div>
-                    <div className="perspective-item">
-                      <span className="perspective-label">Expectations:</span>
-                      <p>{patientState.illnessPerception_Expectations}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="clinical-summary">
-                  <h4>⚕️ Clinical Summary</h4>
-                  <div className="clinical-grid">
-                    <div className="clinical-item">
-                      <span className="clinical-label">Diagnosis:</span>
-                      <p>{patientState.correctDiagnosis}</p>
-                    </div>
-                    <div className="clinical-item">
-                      <span className="clinical-label">Key History:</span>
-                      <p>{patientState.relevantPastMedicalHistory}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card-actions">
-                  <button 
-                    className="btn-outline" 
-                    onClick={() => setShowFullPatientInfo(true)}
-                  >
-                    📋 View Complete Information
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Control Panel */}
