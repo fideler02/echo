@@ -285,7 +285,7 @@ function SimulationPage() {
         <div className="simulation-content">
           {/* Patient Information Card */}
           {patientState && (
-            <div className="patient-card modern-card">
+            <div className="patient-card">
               <div className="patient-card-header">
                 <div className="patient-avatar">
                   <span className="avatar-icon">👤</span>
