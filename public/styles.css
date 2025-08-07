@@ -652,6 +652,7 @@ html, body {
   border: 1px solid #e1e5e9;
   overflow: hidden;
   height: fit-content;
+  flex-shrink: 0;
 }
 
 .patient-card-header {
